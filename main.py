@@ -185,7 +185,7 @@ class CollisionDetector:
     def is_obstacle(self, x: int, y: int) -> bool:
         for obstacle_coord in self.obstacle_handler.obstacles_placement:
             if (self.__x + x - 25) == obstacle_coord[0]:
-                if (self.__y + y - 25) == obstacle.coord[1]:
+                if (self.__y + y - 25) == obstacle_coord[1]:
                     return False
         return True
 
