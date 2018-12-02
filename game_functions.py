@@ -1,6 +1,7 @@
 import sys
 import pygame
 from bomberman.bomb import Bomb
+from bomberman.obstacle import Obstacle
 
 
 def check_keydown_events(event, game_settings, screen, character, bombs):
@@ -24,6 +25,27 @@ def place_bomb(game_settings, screen, character, bombs):
         bombs.add(new_bomb)
 
 
+def get_number_obstacles_x(game_settings, obstacle_width):
+    available_space_x = game_settings.screen_width - 2 * obstacle_width
+    number_obstacles_x = int(available_space_x/(2*obstacle_width))
+    return number_obstacles_x
+
+
+def create_obstacle(game_settings, screen, obstacles, obstacle_number):
+    obstacle = Obstacle(game_settings, screen)
+    obstacle_width = obstacle.rect.width
+    obstacle.x = obstacle_width + 2 * obstacle_width * obstacle_number
+    obstacle.rect.x = obstacle.x
+    obstacles.add(obstacle)
+
+
+def create_obstacles(game_settings, screen, obstacles):
+    obstacle = Obstacle(game_settings, screen)
+    obstacle_width = obstacle.rect.width
+    number_obstacles_x = get_number_obstacles_x(game_settings, obstacle_width)
+
+    for obstacle_number in range(number_obstacles_x):
+        create_obstacle(game_settings, screen, obstacles, obstacle_number)
 
 
 def check_keyup_events(event, character):
@@ -54,10 +76,10 @@ def update_bombs(bombs):
             bombs.remove(bomb)
 
 
-def update_screen(game_settings, screen, character, obstacle, bombs):
+def update_screen(game_settings, screen, character, obstacles, bombs):
     screen.fill(game_settings.bg_color)
     for bomb in bombs.sprites():
         bomb.draw_bomb()
     character.blitme()
-    obstacle.blitme()
+    obstacles.draw(screen)
     pygame.display.flip()
