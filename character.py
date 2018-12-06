@@ -1,6 +1,7 @@
 import pygame
 
-class Character():
+
+class Character:
     def __init__(self, game_settings, screen):
         self.screen = screen
         self.image = pygame.image.load('player.bmp')
@@ -8,8 +9,8 @@ class Character():
         self.screen_rect = screen.get_rect()
         self.game_settings = game_settings
 
-        self.rect.centerx = self.screen_rect.centerx
-        self.rect.bottom = self.screen_rect.bottom
+        self.rect.left = self.screen_rect.left
+        self.rect.top = self.screen_rect.top
 
         self.center = float(self.rect.centerx)
         self.center_height = float(self.rect.centery)
@@ -18,7 +19,6 @@ class Character():
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
-
 
     def update(self):
         if self.moving_right and (self.rect.right < self.screen_rect.right):

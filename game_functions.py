@@ -19,6 +19,12 @@ def check_keydown_events(event, game_settings, screen, character, bombs):
         sys.exit()
 
 
+def get_number_rows(game_settings, obstacle_height):
+    available_space_y = (game_settings.screen_height)
+    number_rows = int(available_space_y / (2 * obstacle_height))
+    return number_rows
+
+
 def place_bomb(game_settings, screen, character, bombs):
     if len(bombs) < game_settings.bombs_allowed:
         new_bomb = Bomb(game_settings, screen, character)
@@ -31,21 +37,23 @@ def get_number_obstacles_x(game_settings, obstacle_width):
     return number_obstacles_x
 
 
-def create_obstacle(game_settings, screen, obstacles, obstacle_number):
+def create_obstacle(game_settings, screen, obstacles, obstacle_number, row_number):
     obstacle = Obstacle(game_settings, screen)
     obstacle_width = obstacle.rect.width
     obstacle.x = obstacle_width + 2 * obstacle_width * obstacle_number
     obstacle.rect.x = obstacle.x
+    obstacle.rect.y = obstacle.rect.height + 2 * obstacle.rect.height * row_number
     obstacles.add(obstacle)
 
 
-def create_obstacles(game_settings, screen, obstacles):
+def create_obstacles(game_settings, screen, character, obstacles):
     obstacle = Obstacle(game_settings, screen)
     obstacle_width = obstacle.rect.width
     number_obstacles_x = get_number_obstacles_x(game_settings, obstacle_width)
-
-    for obstacle_number in range(number_obstacles_x):
-        create_obstacle(game_settings, screen, obstacles, obstacle_number)
+    number_rows = get_number_rows(game_settings, obstacle.rect.height)
+    for row_number in range(number_rows):
+        for obstacle_number in range(number_obstacles_x):
+            create_obstacle(game_settings, screen, obstacles, obstacle_number, row_number)
 
 
 def check_keyup_events(event, character):
