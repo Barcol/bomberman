@@ -13,12 +13,13 @@ def run_game():
     character = Character(game_settings, screen)
     bombs = Group()
     obstacles = Group()
+    explosions = Group()
     gf.create_obstacles(game_settings, screen, obstacles)
 
     while True:
         gf.check_events(game_settings, screen, character, bombs)
         character.update()
-        gf.update_bombs(bombs)
+        gf.update_bombs(bombs, game_settings, screen, explosions, obstacles)
         gf.update_screen(game_settings, screen, character, obstacles, bombs)
 
 

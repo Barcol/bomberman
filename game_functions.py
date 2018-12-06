@@ -3,6 +3,7 @@ import pygame
 import math
 from bomberman.bomb import Bomb
 from bomberman.obstacle import Obstacle
+from bomberman.explosions import Explosion
 
 
 def check_keydown_events(event, game_settings, screen, character, bombs):
@@ -84,10 +85,13 @@ def check_events(game_settings, screen, character, bombs):
             check_keyup_events(event, character)
 
 
-def update_bombs(bombs):
+def update_bombs(bombs, game_settings, screen, explosions, obstacles):
     bombs.update()
     for bomb in bombs.copy():
         if bomb.lifetime < 1:
+            explosions.add(Explosion(game_settings.explosion_size_x, 20, screen, bomb))
+            explosions.add(Explosion(20, game_settings.explosion_size_y, screen, bomb))
+            pygame.sprite.groupcollide(explosions, obstacles, True, True)
             bombs.remove(bomb)
 
 
