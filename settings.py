@@ -1,7 +1,7 @@
 class Settings():
     def __init__(self):
-        self.screen_width = 1200
-        self.screen_height = 800
+        self.screen_width = 1241
+        self.screen_height = 825
         self.bg_color = (41, 193, 49)
         self.character_speed = 1.5
         self.bomb_width = 10

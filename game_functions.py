@@ -1,5 +1,6 @@
 import sys
 import pygame
+import math
 from bomberman.bomb import Bomb
 from bomberman.obstacle import Obstacle
 
@@ -20,8 +21,9 @@ def check_keydown_events(event, game_settings, screen, character, bombs):
 
 
 def get_number_rows(game_settings, obstacle_height):
-    available_space_y = (game_settings.screen_height)
-    number_rows = int(available_space_y / (2 * obstacle_height))
+    available_space_y = game_settings.screen_height
+    number_rows = int(available_space_y / obstacle_height)
+    print(obstacle_height)
     return number_rows
 
 
@@ -31,29 +33,34 @@ def place_bomb(game_settings, screen, character, bombs):
         bombs.add(new_bomb)
 
 
-def get_number_obstacles_x(game_settings, obstacle_width):
-    available_space_x = game_settings.screen_width - 2 * obstacle_width
-    number_obstacles_x = int(available_space_x/(2*obstacle_width))
+def get_number_obstacles_x(game_settings, obstacle_width, tabulator):
+    available_space_x = game_settings.screen_width - obstacle_width
+    number_obstacles_x = int(math.ceil(available_space_x/(2 * obstacle_width)))
+    if not tabulator:
+        number_obstacles_x += 1
     return number_obstacles_x
 
 
-def create_obstacle(game_settings, screen, obstacles, obstacle_number, row_number):
+def create_obstacle(game_settings, screen, obstacles, obstacle_number, row_number, tabulator):
     obstacle = Obstacle(game_settings, screen)
     obstacle_width = obstacle.rect.width
-    obstacle.x = obstacle_width + 2 * obstacle_width * obstacle_number
+    obstacle.x = tabulator + 2 * obstacle_width * obstacle_number
     obstacle.rect.x = obstacle.x
-    obstacle.rect.y = obstacle.rect.height + 2 * obstacle.rect.height * row_number
+    obstacle.rect.y = obstacle.rect.height * row_number
     obstacles.add(obstacle)
 
 
-def create_obstacles(game_settings, screen, character, obstacles):
+def create_obstacles(game_settings, screen, obstacles):
     obstacle = Obstacle(game_settings, screen)
     obstacle_width = obstacle.rect.width
-    number_obstacles_x = get_number_obstacles_x(game_settings, obstacle_width)
     number_rows = get_number_rows(game_settings, obstacle.rect.height)
     for row_number in range(number_rows):
-        for obstacle_number in range(number_obstacles_x):
-            create_obstacle(game_settings, screen, obstacles, obstacle_number, row_number)
+        if (row_number % 2) != 0:
+            tabulator = 0
+        else:
+            tabulator = obstacle.rect.height
+        for obstacle_number in range(get_number_obstacles_x(game_settings, obstacle_width, tabulator)):
+            create_obstacle(game_settings, screen, obstacles, obstacle_number, row_number, tabulator)
 
 
 def check_keyup_events(event, character):
