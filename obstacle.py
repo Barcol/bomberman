@@ -3,12 +3,12 @@ from pygame.sprite import Sprite
 
 
 class Obstacle(Sprite):
-    def __init__(self, game_settings, screen):
+    def __init__(self, game_settings, screen, spirit):
         super(Obstacle, self).__init__()
         self.screen = screen
         self.game_settings = game_settings
 
-        self.image = pygame.image.load("obstacle.bmp")
+        self.image = pygame.image.load(spirit)
         self.rect = self.image.get_rect()
 
         self.rect.x = self.rect.width

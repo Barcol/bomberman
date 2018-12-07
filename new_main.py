@@ -14,8 +14,10 @@ def run_game():
     bombs = Group()
     bombs2 = Group()
     obstacles = Group()
+    hard_obstacles = Group()
     explosions = Group()
     gf.create_obstacles(game_settings, screen, obstacles)
+    gf.create_hard_obstacles(game_settings, screen, hard_obstacles)
     pygame.joystick.init()
     pygame.joystick.Joystick(0).init()
     joystick = pygame.joystick.Joystick(0)
@@ -28,7 +30,7 @@ def run_game():
         character2.update()
         gf.update_bombs(bombs, game_settings, screen, explosions, obstacles)
         gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles)
-        gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2)
+        gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles)
 
 
 run_game()
