@@ -75,7 +75,32 @@ def check_keyup_events(event, character):
         character.moving_down = False
 
 
-def check_events(game_settings, screen, character, bombs):
+def check_joystick_axis_events(axis_x, axis_y, character):
+    if (axis_x < 0.4) and (axis_x > -0.4):
+        character.moving_right = False
+        character.moving_left = False
+    if axis_x > 0.4:
+        character.moving_right = True
+        character.moving_left = False
+    if axis_x < -0.4:
+        character.moving_left = True
+        character.moving_right = False
+    if (axis_y < 0.4) and (axis_y > -0.4):
+        character.moving_up = False
+        character.moving_down = False
+    if axis_y > 0.4:
+        character.moving_up = False
+        character.moving_down = True
+    if axis_y < - 0.4:
+        character.moving_down = False
+        character.moving_up = True
+
+
+def check_joystick_events(character, joystick):
+    check_joystick_axis_events(joystick.get_axis(0), joystick.get_axis(1), character)
+
+
+def check_events(game_settings, screen, character, bombs, character2):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -83,6 +108,8 @@ def check_events(game_settings, screen, character, bombs):
             check_keydown_events(event, game_settings, screen, character, bombs)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, character)
+        elif event.type == pygame.JOYBUTTONDOWN:
+            place_bomb(game_settings, screen, character2, bombs)
 
 
 def update_bombs(bombs, game_settings, screen, explosions, obstacles):
@@ -95,10 +122,11 @@ def update_bombs(bombs, game_settings, screen, explosions, obstacles):
             bombs.remove(bomb)
 
 
-def update_screen(game_settings, screen, character, obstacles, bombs):
+def update_screen(game_settings, screen, character, obstacles, bombs, character2):
     screen.fill(game_settings.bg_color)
     for bomb in bombs.sprites():
         bomb.draw_bomb()
     character.blitme()
+    character2.blitme()
     obstacles.draw(screen)
     pygame.display.flip()

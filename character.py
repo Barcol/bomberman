@@ -2,15 +2,18 @@ import pygame
 
 
 class Character:
-    def __init__(self, game_settings, screen):
+    def __init__(self, game_settings, screen, coord):
         self.screen = screen
         self.image = pygame.image.load('player.bmp')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.game_settings = game_settings
-
-        self.rect.left = self.screen_rect.left
-        self.rect.top = self.screen_rect.top
+        if coord == (0,0):
+            self.rect.left = self.screen_rect.left
+            self.rect.top = self.screen_rect.top
+        elif coord == (1,1):
+            self.rect.right = self.screen_rect.right
+            self.rect.bottom = self.screen_rect.bottom
 
         self.center = float(self.rect.centerx)
         self.center_height = float(self.rect.centery)
