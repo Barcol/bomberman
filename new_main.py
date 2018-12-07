@@ -12,6 +12,7 @@ def run_game():
     pygame.display.set_caption("BOMBERMAN")
     character = Character(game_settings, screen, (0, 0))
     bombs = Group()
+    bombs2 = Group()
     obstacles = Group()
     explosions = Group()
     gf.create_obstacles(game_settings, screen, obstacles)
@@ -21,12 +22,13 @@ def run_game():
     character2 = Character(game_settings, screen, (1, 1))
     while True:
         pygame.event.pump()
-        gf.check_events(game_settings, screen, character, bombs, character2)
+        gf.check_events(game_settings, screen, character, bombs, character2, bombs2)
         character.update()
         gf.check_joystick_events(character2, joystick)
         character2.update()
         gf.update_bombs(bombs, game_settings, screen, explosions, obstacles)
-        gf.update_screen(game_settings, screen, character, obstacles, bombs, character2)
+        gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles)
+        gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2)
 
 
 run_game()

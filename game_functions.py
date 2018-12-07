@@ -100,7 +100,7 @@ def check_joystick_events(character, joystick):
     check_joystick_axis_events(joystick.get_axis(0), joystick.get_axis(1), character)
 
 
-def check_events(game_settings, screen, character, bombs, character2):
+def check_events(game_settings, screen, character, bombs, character2, bombs2):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -109,7 +109,7 @@ def check_events(game_settings, screen, character, bombs, character2):
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, character)
         elif event.type == pygame.JOYBUTTONDOWN:
-            place_bomb(game_settings, screen, character2, bombs)
+            place_bomb(game_settings, screen, character2, bombs2)
 
 
 def update_bombs(bombs, game_settings, screen, explosions, obstacles):
@@ -122,9 +122,11 @@ def update_bombs(bombs, game_settings, screen, explosions, obstacles):
             bombs.remove(bomb)
 
 
-def update_screen(game_settings, screen, character, obstacles, bombs, character2):
+def update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2):
     screen.fill(game_settings.bg_color)
     for bomb in bombs.sprites():
+        bomb.draw_bomb()
+    for bomb in bombs2.sprites():
         bomb.draw_bomb()
     character.blitme()
     character2.blitme()
