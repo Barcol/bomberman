@@ -130,11 +130,15 @@ def update_bombs(bombs, game_settings, screen, explosions, obstacles):
         if bomb.lifetime < 1:
             explosions.add(Explosion(game_settings.explosion_size_x, 20, screen, bomb))
             explosions.add(Explosion(20, game_settings.explosion_size_y, screen, bomb))
-            pygame.sprite.groupcollide(explosions, obstacles, True, True)
+            pygame.sprite.groupcollide(explosions, obstacles, False, True)
             bombs.remove(bomb)
+    for explosion in explosions:
+        explosion.update()
+        if explosion.lifetime < 0:
+            explosions.remove(explosion)
 
 
-def update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles):
+def update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles, explosions):
     screen.fill(game_settings.bg_color)
     for bomb in bombs.sprites():
         bomb.draw_bomb()
@@ -143,5 +147,7 @@ def update_screen(game_settings, screen, character, obstacles, bombs, character2
     character.blitme()
     character2.blitme()
     obstacles.draw(screen)
+    for explosion in explosions.sprites():
+        explosion.drawme()
     hard_obstacles.draw(screen)
     pygame.display.flip()

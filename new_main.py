@@ -30,7 +30,7 @@ def run_game():
         character2.update()
         gf.update_bombs(bombs, game_settings, screen, explosions, obstacles)
         gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles)
-        gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles)
+        gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles, explosions)
 
 
 run_game()
