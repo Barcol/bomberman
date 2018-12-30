@@ -1,8 +1,9 @@
 import pygame
-from settings import Settings
-from character import Character
-import game_functions as gf
 from pygame.sprite import Group
+
+import game_functions as gf
+from character import Character
+from settings import Settings
 
 
 def run_game():
