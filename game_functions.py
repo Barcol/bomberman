@@ -1,9 +1,9 @@
 import sys
 import pygame
 import math
-from bomberman.bomb import Bomb
-from bomberman.obstacle import Obstacle
-from bomberman.explosions import Explosion
+from bomb import Bomb
+from obstacle import Obstacle
+from explosions import Explosion
 
 
 def check_keydown_events(event, game_settings, screen, character, bombs):

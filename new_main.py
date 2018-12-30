@@ -1,7 +1,7 @@
 import pygame
-from bomberman.settings import Settings
-from bomberman.character import Character
-import bomberman.game_functions as gf
+from settings import Settings
+from character import Character
+import game_functions as gf
 from pygame.sprite import Group
 
 
@@ -32,7 +32,6 @@ def run_game():
         gf.update_bombs(bombs, game_settings, screen, explosions, obstacles)
         gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles)
         gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles, explosions)
-        print(latest_choices)
 
 
 run_game()
