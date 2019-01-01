@@ -11,3 +11,4 @@ class Settings():
         self.bombs_allowed = 3
         self.explosion_size_y = 150
         self.explosion_size_x = 150
+        self.explosion_width = 20

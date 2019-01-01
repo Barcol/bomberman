@@ -143,8 +143,8 @@ def update_bombs(bombs, game_settings, screen, explosions, obstacles):
     bombs.update()
     for bomb in bombs.copy():
         if bomb.lifetime < 1:
-            explosions.add(Explosion(game_settings.explosion_size_x, 20, screen, bomb))
-            explosions.add(Explosion(20, game_settings.explosion_size_y, screen, bomb))
+            explosions.add(Explosion(game_settings.explosion_size_x, game_settings.explosion_width, screen, bomb))
+            explosions.add(Explosion(game_settings.explosion_width, game_settings.explosion_size_y, screen, bomb))
             pygame.sprite.groupcollide(explosions, obstacles, False, True)
             bombs.remove(bomb)
     for explosion in explosions:

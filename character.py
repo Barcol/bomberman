@@ -8,10 +8,10 @@ class Character:
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.game_settings = game_settings
-        if coord == (0,0):
+        if coord == (0, 0):
             self.rect.left = self.screen_rect.left
             self.rect.top = self.screen_rect.top
-        elif coord == (1,1):
+        elif coord == (1, 1):
             self.rect.right = self.screen_rect.right
             self.rect.bottom = self.screen_rect.bottom
 
@@ -60,8 +60,6 @@ class Character:
             if pygame.sprite.collide_rect(obstacle, self):
                 return False
         return True
-
-
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
