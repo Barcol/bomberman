@@ -9,6 +9,5 @@ class Settings():
         self.bomb_color = 60, 60, 60
         self.bomb_speed_factor = 1
         self.bombs_allowed = 3
-        self.explosion_size_y = 150
-        self.explosion_size_x = 150
+        self.explosion_size = 150
         self.explosion_width = 20
