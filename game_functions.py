@@ -131,6 +131,14 @@ def check_events(game_settings, screen, character, bombs, character2, bombs2):
             place_bomb(game_settings, screen, character2, bombs2)
 
 
+def kill_yout_heroes(game_settings, screen, explosions, character, character2):
+    for explosion in explosions:
+        if pygame.sprite.collide_rect(explosion, character):
+            print("Gracz z klawiatury nie zyje!")
+        if pygame.sprite.collide_rect(explosion, character2):
+            print("Gracz z pada nie żyje!")
+
+
 def update_bombs(bombs, game_settings, screen, explosions, obstacles):
     bombs.update()
     for bomb in bombs.copy():

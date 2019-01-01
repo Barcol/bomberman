@@ -7,7 +7,7 @@ class Bomb(Sprite):
         self.screen = screen
         self.rect = pygame.Rect(0, 0, game_settings.bomb_width, game_settings.bomb_height)
         self.rect.centerx = character.rect.centerx
-        self.rect.top = character.rect.top
+        self.rect.top = character.rect.centery
         self.lifetime = 60
 
         self.color = game_settings.bomb_color

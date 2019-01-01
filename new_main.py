@@ -32,6 +32,7 @@ def run_game():
         character2.update(obstacles, hard_obstacles)
         gf.update_bombs(bombs, game_settings, screen, explosions, obstacles)
         gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles)
+        gf.kill_yout_heroes(game_settings, screen, explosions, character, character2)
         gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles, explosions)
 
 

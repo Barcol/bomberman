@@ -28,25 +28,25 @@ class Character:
             if self.collision_check(obstacles, hard_obstacles):
                 self.center += self.game_settings.character_speed
             else:
-                self.center -= self.game_settings.character_speed
+                self.center -= 2 * self.game_settings.character_speed
                 self.moving_right = False
         if self.moving_left and (self.rect.left > self.screen_rect.left):
             if self.collision_check(obstacles, hard_obstacles):
                 self.center -= self.game_settings.character_speed
             else:
-                self.center += self.game_settings.character_speed
+                self.center += 2 * self.game_settings.character_speed
                 self.moving_left = False
         if self.moving_up and (self.rect.top > self.screen_rect.top):
             if self.collision_check(obstacles, hard_obstacles):
                 self.center_height -= self.game_settings.character_speed
             else:
-                self.center_height += self.game_settings.character_speed
+                self.center_height += 2 * self.game_settings.character_speed
                 self.moving_up = False
         if self.moving_down and (self.rect.bottom < self.screen_rect.bottom):
             if self.collision_check(obstacles, hard_obstacles):
                 self.center_height += self.game_settings.character_speed
             else:
-                self.center_height -= self.game_settings.character_speed
+                self.center_height -= 2 * self.game_settings.character_speed
                 self.moving_down = False
 
         self.rect.centerx = self.center
