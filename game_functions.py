@@ -59,7 +59,8 @@ def create_hard_obstacles(game_settings, screen, obstacles):
     number_rows = get_number_rows(game_settings, obstacle.rect.height)
     for row_number in range(math.floor(number_rows/2)):
         for obstacle_number in range(get_number_obstacles_x(game_settings, obstacle_width, 0) - 1):
-            create_obstacle(game_settings, screen, obstacles, obstacle_number, 1 + (2 * row_number), obstacle_width, "hard_obstacle.bmp")
+            create_obstacle(game_settings, screen, obstacles, obstacle_number, 1 + (2 * row_number), obstacle_width,
+                            "hard_obstacle.bmp")
 
 
 def create_obstacles(game_settings, screen, obstacles):
@@ -119,7 +120,8 @@ def check_joystick_axis_events(axis_x, axis_y, character, latest_choice, latest_
 
 
 def check_joystick_events(character, joystick, latest_choice, latest_choice_y):
-    return check_joystick_axis_events(joystick.get_axis(0), joystick.get_axis(1), character, latest_choice, latest_choice_y)
+    return check_joystick_axis_events(joystick.get_axis(0), joystick.get_axis(1), character, latest_choice,
+                                      latest_choice_y)
 
 
 def check_events(game_settings, screen, character, bombs, character2, bombs2):
@@ -143,7 +145,7 @@ def kill_yout_heroes(explosions, character, character2):
 
 
 def place_a_treasure(drop_x, drop_y, game_settings, screen, treasures):
-    if random.randint(0,10) < 5:
+    if random.randint(0, 10) < 5:
         treasure = Obstacle(game_settings, screen, "treasure.bmp")
         treasure.rect.x = drop_x
         treasure.rect.y = drop_y
@@ -158,11 +160,11 @@ def player_collected_treasure(character, treasures):
 
 
 def type_of_upgrade(character):
-    guess = random.randint(0,3)
+    guess = random.randint(0, 3)
     if guess == 0:
         print("speed bonus!")
         character.character_speed += 0.4
-    if guess in (1,2):
+    if guess in (1, 2):
         character.explosion_size += 25
         print("attack bonus!")
     if guess == 3:
@@ -179,7 +181,8 @@ def update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures)
             explosions.add(Explosion(game_settings.explosion_width, bomb.character.explosion_size, screen, bomb))
             destroyed_obstacles = pygame.sprite.groupcollide(explosions, obstacles, False, True)
             for ashes in destroyed_obstacles:
-                drop.append(place_a_treasure(destroyed_obstacles[ashes][0].rect.x, destroyed_obstacles[ashes][0].rect.y, game_settings, screen, treasures))
+                drop.append(place_a_treasure(destroyed_obstacles[ashes][0].rect.x, destroyed_obstacles[ashes][0].rect.y,
+                                             game_settings, screen, treasures))
             bombs.remove(bomb)
     for explosion in explosions:
         explosion.update()
@@ -187,7 +190,8 @@ def update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures)
             explosions.remove(explosion)
 
 
-def update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles, explosions, treasures):
+def update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles, explosions,
+                  treasures):
     screen.fill(game_settings.bg_color)
     for bomb in bombs.sprites():
         bomb.draw_bomb()

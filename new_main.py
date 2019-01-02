@@ -36,7 +36,8 @@ def run_game():
         gf.kill_yout_heroes(explosions, character, character2)
         gf.player_collected_treasure(character, treasures)
         gf.player_collected_treasure(character2, treasures)
-        gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles, explosions, treasures)
+        gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles,
+                         explosions, treasures)
 
 
 run_game()
