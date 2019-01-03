@@ -21,13 +21,12 @@ def run_game():
     treasures = Group()
     gf.create_obstacles(game_settings, screen, obstacles)
     gf.create_hard_obstacles(game_settings, screen, hard_obstacles)
-    joystick = None
-    try:
+    if pygame.joystick.get_count():
         pygame.joystick.init()
         pygame.joystick.Joystick(0).init()
         joystick = pygame.joystick.Joystick(0)
-    except:
-        print("No Pad available")
+    else:
+        joystick = None
     latest_choices = (0, 0)
     while True:
         pygame.event.pump()
