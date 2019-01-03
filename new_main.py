@@ -31,7 +31,6 @@ def run_game():
         if joystick.is_joystick():
             latest_choices = gf.check_joystick_events(character2, joystick.is_joystick(), latest_choices[0],
                                                       latest_choices[1])
-        print(latest_choices)
         character2.update(obstacles, hard_obstacles)
         gf.update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures)
         gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles, treasures)
@@ -41,5 +40,5 @@ def run_game():
         gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles,
                          explosions, treasures)
 
-
-run_game()
+if __name__ == "__main__":
+    run_game()
