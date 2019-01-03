@@ -11,7 +11,6 @@ class Bomb(Sprite):
         self.rect.top = character.rect.centery
         self.lifetime = 100
         self.character = character
-
         self.color = game_settings.bomb_color
         self.speed_factor = game_settings.bomb_speed_factor
 

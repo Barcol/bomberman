@@ -91,32 +91,43 @@ def check_keyup_events(event, character):
         character.moving_down = False
 
 
-def check_joystick_axis_events(axis_x, axis_y, character, latest_choice, latest_choice_y):
-    if (axis_x < 0.4) and (axis_x > -0.4) and (latest_choice != 0):
-        character.moving_right = False
-        character.moving_left = False
+def set_character_movement(character, up, right, down, left):
+    character.moving_up = up
+    character.moving_right = right
+    character.moving_down = down
+    character.moving_left = left
+
+
+def detect_last_choice(character):
+    if not (character.moving_left or character.moving_right):
         latest_choice = 0
-    if axis_x > 0.4 and (latest_choice != 1):
-        character.moving_right = True
-        character.moving_left = False
+    elif character.moving_right:
         latest_choice = 1
-    if axis_x < -0.4 and (latest_choice != 2):
-        character.moving_left = True
-        character.moving_right = False
+    else:
         latest_choice = 2
-    if (axis_y < 0.4) and (axis_y > -0.4) and (latest_choice_y != 3):
-        character.moving_up = False
-        character.moving_down = False
+    if not(character.moving_up or character.moving_down):
         latest_choice_y = 3
-    if axis_y > 0.4 and (latest_choice_y != 4):
-        character.moving_up = False
-        character.moving_down = True
+    elif character.moving_down:
         latest_choice_y = 4
-    if axis_y < - 0.4 and (latest_choice_y != 5):
-        character.moving_down = False
-        character.moving_up = True
+    else:
         latest_choice_y = 5
     return latest_choice, latest_choice_y
+
+
+def check_joystick_axis_events(axis_x, axis_y, character, latest_choice, latest_choice_y):
+    if (axis_x < 0.4) and (axis_x > -0.4) and (latest_choice != 0):
+        set_character_movement(character, character.moving_up, False, character.moving_down, False)
+    if axis_x > 0.4 and (latest_choice != 1):
+        set_character_movement(character, character.moving_up, True, character.moving_down, False)
+    if axis_x < -0.4 and (latest_choice != 2):
+        set_character_movement(character, character.moving_up, False, character.moving_down, True)
+    if (axis_y < 0.4) and (axis_y > -0.4) and (latest_choice_y != 3):
+        set_character_movement(character, False, character.moving_right, False, character.moving_left)
+    if axis_y > 0.4 and (latest_choice_y != 4):
+        set_character_movement(character, False, character.moving_right, True, character.moving_left)
+    if axis_y < - 0.4 and (latest_choice_y != 5):
+        set_character_movement(character, True, character.moving_right, False, character.moving_left)
+    return detect_last_choice(character)
 
 
 def check_joystick_events(character, joystick, latest_choice, latest_choice_y):
@@ -162,13 +173,10 @@ def player_collected_treasure(character, treasures):
 def type_of_upgrade(character):
     guess = random.randint(0, 3)
     if guess == 0:
-        print("speed bonus!")
         character.character_speed += 0.4
     if guess in (1, 2):
         character.explosion_size += 25
-        print("attack bonus!")
     if guess == 3:
-        print("bomb number bonus!")
         character.bombs_allowed += 1
 
 

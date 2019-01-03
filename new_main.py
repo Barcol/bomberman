@@ -4,6 +4,7 @@ from pygame.sprite import Group
 import game_functions as gf
 from character import Character
 from settings import Settings
+from joystick import Joystick
 
 
 def run_game():
@@ -21,19 +22,16 @@ def run_game():
     treasures = Group()
     gf.create_obstacles(game_settings, screen, obstacles)
     gf.create_hard_obstacles(game_settings, screen, hard_obstacles)
-    if pygame.joystick.get_count():
-        pygame.joystick.init()
-        pygame.joystick.Joystick(0).init()
-        joystick = pygame.joystick.Joystick(0)
-    else:
-        joystick = None
+    joystick = Joystick()
     latest_choices = (0, 0)
     while True:
         pygame.event.pump()
         gf.check_events(game_settings, screen, character, bombs, character2, bombs2)
         character.update(obstacles, hard_obstacles)
-        if joystick:
-            latest_choices = gf.check_joystick_events(character2, joystick, latest_choices[0], latest_choices[1])
+        if joystick.is_joystick():
+            latest_choices = gf.check_joystick_events(character2, joystick.is_joystick(), latest_choices[0],
+                                                      latest_choices[1])
+        print(latest_choices)
         character2.update(obstacles, hard_obstacles)
         gf.update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures)
         gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles, treasures)
