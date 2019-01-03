@@ -21,15 +21,20 @@ def run_game():
     treasures = Group()
     gf.create_obstacles(game_settings, screen, obstacles)
     gf.create_hard_obstacles(game_settings, screen, hard_obstacles)
-    pygame.joystick.init()
-    pygame.joystick.Joystick(0).init()
-    joystick = pygame.joystick.Joystick(0)
+    joystick = None
+    try:
+        pygame.joystick.init()
+        pygame.joystick.Joystick(0).init()
+        joystick = pygame.joystick.Joystick(0)
+    except:
+        print("No Pad available")
     latest_choices = (0, 0)
     while True:
         pygame.event.pump()
         gf.check_events(game_settings, screen, character, bombs, character2, bombs2)
         character.update(obstacles, hard_obstacles)
-        latest_choices = gf.check_joystick_events(character2, joystick, latest_choices[0], latest_choices[1])
+        if joystick:
+            latest_choices = gf.check_joystick_events(character2, joystick, latest_choices[0], latest_choices[1])
         character2.update(obstacles, hard_obstacles)
         gf.update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures)
         gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles, treasures)
