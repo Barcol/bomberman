@@ -1,9 +1,11 @@
 import pygame
 from pygame.sprite import Sprite
+from pygame import Surface
+from settings import Settings
 
 
 class Obstacle(Sprite):
-    def __init__(self, game_settings, screen, spirit):
+    def __init__(self, game_settings: Settings, screen: Surface, spirit: str):
         super(Obstacle, self).__init__()
         self.screen = screen
         self.game_settings = game_settings

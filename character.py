@@ -1,8 +1,12 @@
 import pygame
+from typing import Tuple
+from settings import Settings
+from pygame import Surface
+from pygame.sprite import Group
 
 
 class Character:
-    def __init__(self, game_settings, screen, coord):
+    def __init__(self, game_settings: Settings, screen: Surface, coord: Tuple):
         self.screen = screen
         self.image = pygame.image.load("player.bmp")
         self.rect = self.image.get_rect()
@@ -36,7 +40,7 @@ class Character:
         self.image = pygame.image.load("dead_player.bmp")
         self.alive = False
 
-    def update(self, obstacles, hard_obstacles):
+    def update(self, obstacles: Group, hard_obstacles: Group):
         if self.moving_right and (self.rect.right < self.screen_rect.right) and self.alive:
             if self.collision_check(obstacles, hard_obstacles):
                 self.center += self.character_speed
@@ -65,7 +69,7 @@ class Character:
         self.rect.centerx = self.center
         self.rect.centery = self.center_height
 
-    def collision_check(self, obstacles, hard_obstacles):
+    def collision_check(self, obstacles: Group, hard_obstacles: Group) -> bool:
         for obstacle in obstacles:
             if pygame.sprite.collide_rect(obstacle, self):
                 return False

@@ -4,9 +4,17 @@ import pygame
 
 from bomb import Bomb
 from explosions import Explosion
+from settings import Settings
+from pygame import Surface
+from character import Character
+from pygame.sprite import Group
+from pygame.event import EventType
+from typing import Tuple, Union
+from pygame.joystick import Joystick
+from smile_of_fate import SmileOfFate
 
 
-def check_keydown_events(event, game_settings, screen, character, bombs):
+def check_keydown_events(event: EventType, game_settings: Settings, screen: Surface, character: Character, bombs: Group):
     if event.key == pygame.K_RIGHT:
         character.moving_right = True
     if event.key == pygame.K_LEFT:
@@ -21,13 +29,13 @@ def check_keydown_events(event, game_settings, screen, character, bombs):
         sys.exit()
 
 
-def place_bomb(game_settings, screen, character, bombs):
+def place_bomb(game_settings: Settings, screen: Surface, character: Character, bombs: Group):
     if len(bombs) < character.bombs_allowed:
         new_bomb = Bomb(game_settings, screen, character)
         bombs.add(new_bomb)
 
 
-def check_keyup_events(event, character):
+def check_keyup_events(event: EventType, character: Character):
     if event.key == pygame.K_RIGHT:
         character.moving_right = False
     if event.key == pygame.K_LEFT:
@@ -38,14 +46,14 @@ def check_keyup_events(event, character):
         character.moving_down = False
 
 
-def set_character_movement(character, up, right, down, left):
+def set_character_movement(character: Character, up: bool, right: bool, down: bool, left: bool):
     character.moving_up = up
     character.moving_right = right
     character.moving_down = down
     character.moving_left = left
 
 
-def detect_last_choice(character):
+def detect_last_choice(character: Character) -> Tuple:
     if not (character.moving_left or character.moving_right):
         latest_choice = 0
     elif character.moving_right:
@@ -61,7 +69,7 @@ def detect_last_choice(character):
     return latest_choice, latest_choice_y
 
 
-def check_joystick_axis_events(axis_x, axis_y, character, latest_choices):
+def check_joystick_axis_events(axis_x: float, axis_y: float, character: Character, latest_choices: Tuple) -> Tuple:
     if (axis_x < 0.4) and (axis_x > -0.4) and (latest_choices[0] != 0):
         set_character_movement(character, character.moving_up, False, character.moving_down, False)
     if axis_x > 0.4 and (latest_choices[0] != 1):
@@ -77,7 +85,7 @@ def check_joystick_axis_events(axis_x, axis_y, character, latest_choices):
     return detect_last_choice(character)
 
 
-def check_joystick_events(character, joystick, latest_choices):
+def check_joystick_events(character: Character, joystick: Union[Joystick, bool], latest_choices: Tuple):
     return check_joystick_axis_events(joystick.get_axis(0), joystick.get_axis(1), character, latest_choices)
 
 
@@ -93,7 +101,7 @@ def check_events(game_settings, screen, character, bombs, character2, bombs2):
             place_bomb(game_settings, screen, character2, bombs2)
 
 
-def kill_yout_heroes(explosions, character, character2):
+def kill_yout_heroes(explosions: Group, character: Character, character2: Character):
     for explosion in explosions:
         if pygame.sprite.collide_rect(explosion, character):
             character.die()
@@ -101,7 +109,8 @@ def kill_yout_heroes(explosions, character, character2):
             character2.die()
 
 
-def update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures, smile_of_fate):
+def update_bombs(bombs: Group, game_settings: Settings, screen: Surface, explosions: Group, obstacles: Group,
+                 treasures: Group, smile_of_fate: SmileOfFate):
     bombs.update()
     drop = []
     for bomb in bombs.copy():
@@ -120,8 +129,8 @@ def update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures,
             explosions.remove(explosion)
 
 
-def update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles, explosions,
-                  treasures):
+def update_screen(game_settings: Settings, screen: Surface, character: Character, obstacles: Group, bombs: Group,
+                  character2: Character, bombs2: Group, hard_obstacles: Group, explosions: Group, treasures: Group):
     screen.fill(game_settings.bg_color)
     for bomb in bombs.sprites():
         bomb.draw_bomb()

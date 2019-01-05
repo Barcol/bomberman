@@ -1,4 +1,5 @@
 import pygame
+from typing import Union
 
 
 class Joystick:
@@ -11,5 +12,5 @@ class Joystick:
         else:
             self.joystick = None
 
-    def is_joystick(self):
+    def is_joystick(self) -> Union[pygame.joystick.Joystick, bool]:
         return self.joystick

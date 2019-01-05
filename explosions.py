@@ -1,9 +1,11 @@
 import pygame
 from pygame.sprite import Sprite
+from pygame import Surface
+from bomb import Bomb
 
 
 class Explosion(Sprite):
-    def __init__(self, x, y, screen, bomb):
+    def __init__(self, x: int, y: int, screen: Surface, bomb: Bomb):
         super(Explosion, self).__init__()
         self.bomb = bomb
         self.screen = screen

@@ -1,13 +1,17 @@
 import random
 from obstacle import Obstacle
 import pygame
+from character import Character
+from pygame.sprite import Group
+from pygame import Surface
+from settings import Settings
 
 
 class SmileOfFate:
     def __init__(self, game_settings):
         self.game_settings = game_settings
 
-    def type_of_upgrade(self, character):
+    def type_of_upgrade(self, character: Character):
         guess = random.randint(0, 3)
         if guess == 0:
             character.character_speed += self.game_settings.character_speed_boost
@@ -16,7 +20,7 @@ class SmileOfFate:
         if guess == 3:
             character.bombs_allowed += self.game_settings.bombs_allowed_boost
 
-    def place_a_treasure(self, drop_x, drop_y, game_settings, screen, treasures):
+    def place_a_treasure(self, drop_x: int, drop_y: int, game_settings: Settings, screen: Surface, treasures: Group):
         if random.randint(0, 10) < 5:
             treasure = Obstacle(game_settings, screen, "treasure.bmp")
             treasure.rect.x = drop_x

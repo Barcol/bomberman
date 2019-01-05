@@ -1,9 +1,11 @@
 import pygame
 from pygame.sprite import Sprite
-
+from settings import Settings
+from pygame import Surface
+from character import Character
 
 class Bomb(Sprite):
-    def __init__(self, game_settings, screen, character):
+    def __init__(self, game_settings: Settings, screen: Surface, character: Character):
         super(Bomb, self).__init__()
         self.screen = screen
         self.rect = pygame.Rect(0, 0, game_settings.bomb_width, game_settings.bomb_height)

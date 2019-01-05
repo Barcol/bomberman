@@ -1,4 +1,7 @@
 from obstacle import Obstacle
+from settings import Settings
+from pygame.sprite import Group
+from pygame import Surface
 import math
 
 
@@ -6,19 +9,20 @@ class ObstaclePlacer:
     def __init__(self):
         pass
 
-    def get_number_obstacles_x(self, game_settings, obstacle_width, tabulator):
+    def get_number_obstacles_x(self, game_settings: Settings, obstacle_width: int, tabulator: int) -> int:
         available_space_x = game_settings.screen_width - obstacle_width
         number_obstacles_x = int(math.ceil(available_space_x / (2 * obstacle_width)))
         if not tabulator:
             number_obstacles_x += 1
         return number_obstacles_x
 
-    def get_number_rows(self, game_settings, obstacle_height):
+    def get_number_rows(self, game_settings: Settings, obstacle_height: int) -> int:
         available_space_y = game_settings.screen_height
         number_rows = int(available_space_y / obstacle_height)
         return number_rows
 
-    def create_obstacle(self, game_settings, screen, obstacles, obstacle_number, row_number, tabulator, spirit):
+    def create_obstacle(self, game_settings: Settings, screen: Surface, obstacles: Group, obstacle_number: int,
+                        row_number: int, tabulator: int, spirit: str):
         obstacle = Obstacle(game_settings, screen, spirit)
         obstacle_width = obstacle.rect.width
         obstacle.x = tabulator + 2 * obstacle_width * obstacle_number
@@ -26,7 +30,7 @@ class ObstaclePlacer:
         obstacle.rect.y = obstacle.rect.height * row_number
         obstacles.add(obstacle)
 
-    def create_hard_obstacles(self, game_settings, screen, obstacles):
+    def create_hard_obstacles(self, game_settings: Settings, screen: Surface, obstacles: Group):
         obstacle = Obstacle(game_settings, screen, "hard_obstacle.bmp")
         obstacle_width = obstacle.rect.width
         number_rows = self.get_number_rows(game_settings, obstacle.rect.height)
@@ -35,7 +39,7 @@ class ObstaclePlacer:
                 self.create_obstacle(game_settings, screen, obstacles, obstacle_number, 1 + (2 * row_number),
                                      obstacle_width, "hard_obstacle.bmp")
 
-    def create_obstacles(self, game_settings, screen, obstacles):
+    def create_obstacles(self, game_settings: Settings, screen: Surface, obstacles: Group):
         obstacle = Obstacle(game_settings, screen, "obstacle.bmp")
         obstacle_width = obstacle.rect.width
         number_rows = self.get_number_rows(game_settings, obstacle.rect.height)
