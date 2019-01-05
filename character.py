@@ -30,10 +30,11 @@ class Character:
 
     def reset_character_position(self):
         if self.coord == (0, 0):
-            self.rect.move(-self.center, -self.center_height)
+            self.center = self.screen_rect.left + int(self.rect.width / 2)
+            self.center_height = self.screen_rect.top + int(self.rect.height/2)
         elif self.coord == (1, 1):
-            self.rect.right = self.screen_rect.right
-            self.rect.bottom = self.screen_rect.bottom
+            self.right = self.screen_rect.right
+            self.bottom = self.screen_rect.bottom
 
     def die(self):
         self.image = pygame.image.load("dead_player.bmp")
