@@ -33,8 +33,7 @@ def run_game():
         gf.check_events(game_settings, screen, character, bombs, character2, bombs2)
         character.update(obstacles, hard_obstacles)
         if joystick.is_joystick():
-            latest_choices = gf.check_joystick_events(character2, joystick.is_joystick(), latest_choices[0],
-                                                      latest_choices[1])
+            latest_choices = gf.check_joystick_events(character2, joystick.is_joystick(), latest_choices)
         character2.update(obstacles, hard_obstacles)
         gf.update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures, smile_of_fate)
         gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles, treasures, smile_of_fate)
