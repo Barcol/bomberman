@@ -10,18 +10,27 @@ class Character:
         self.bombs_allowed = game_settings.bombs_allowed
         self.character_speed = game_settings.character_speed
         self.explosion_size = game_settings.explosion_size
-
-        if coord == (0, 0):
+        self.coord = coord
+        if self.coord == (0, 0):
             self.rect.left = self.screen_rect.left
             self.rect.top = self.screen_rect.top
-        elif coord == (1, 1):
+        elif self.coord == (1, 1):
             self.rect.right = self.screen_rect.right
             self.rect.bottom = self.screen_rect.bottom
-
         self.center = float(self.rect.centerx)
         self.center_height = float(self.rect.centery)
+        self.center_copy = self.center
+        self.center_height_copy = self.center_height
         self.alive = True
         self.moving_right, self.moving_left, self.moving_up, self.moving_down = (False, False, False, False)
+
+    # TODO
+    def reset_character_position(self):
+        if self.coord == (0, 0):
+            self.rect.move(-self.center, -self.center_height)
+        elif self.coord == (1, 1):
+            self.rect.right = self.screen_rect.right
+            self.rect.bottom = self.screen_rect.bottom
 
     def die(self):
         self.image = pygame.image.load("dead_player.bmp")
