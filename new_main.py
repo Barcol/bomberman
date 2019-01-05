@@ -5,6 +5,7 @@ import game_functions as gf
 from character import Character
 from settings import Settings
 from joystick import Joystick
+from obstacle_placer import ObstaclePlacer
 
 
 def run_game():
@@ -20,8 +21,9 @@ def run_game():
     hard_obstacles = Group()
     explosions = Group()
     treasures = Group()
-    gf.create_obstacles(game_settings, screen, obstacles)
-    gf.create_hard_obstacles(game_settings, screen, hard_obstacles)
+    obstacle_placer = ObstaclePlacer()
+    obstacle_placer.create_obstacles(game_settings, screen, obstacles)
+    obstacle_placer.create_hard_obstacles(game_settings, screen, hard_obstacles)
     joystick = Joystick()
     latest_choices = (0, 0)
     while True:
@@ -39,6 +41,7 @@ def run_game():
         gf.player_collected_treasure(character2, treasures)
         gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles,
                          explosions, treasures)
+
 
 if __name__ == "__main__":
     run_game()
