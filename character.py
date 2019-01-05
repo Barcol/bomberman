@@ -28,7 +28,6 @@ class Character:
         self.alive = True
         self.moving_right, self.moving_left, self.moving_up, self.moving_down = (False, False, False, False)
 
-    # TODO
     def reset_character_position(self):
         if self.coord == (0, 0):
             self.rect.move(-self.center, -self.center_height)

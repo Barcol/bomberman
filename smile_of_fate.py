@@ -20,7 +20,8 @@ class SmileOfFate:
         if guess == 3:
             character.bombs_allowed += self.game_settings.bombs_allowed_boost
 
-    def place_a_treasure(self, drop_x: int, drop_y: int, game_settings: Settings, screen: Surface, treasures: Group):
+    @staticmethod
+    def place_a_treasure(drop_x: int, drop_y: int, game_settings: Settings, screen: Surface, treasures: Group):
         if random.randint(0, 10) < 5:
             treasure = Obstacle(game_settings, screen, "treasure.bmp")
             treasure.rect.x = drop_x

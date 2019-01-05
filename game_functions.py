@@ -14,7 +14,8 @@ from pygame.joystick import Joystick
 from smile_of_fate import SmileOfFate
 
 
-def check_keydown_events(event: EventType, game_settings: Settings, screen: Surface, character: Character, bombs: Group):
+def check_keydown_events(event: EventType, game_settings: Settings, screen: Surface, character: Character,
+                         bombs: Group):
     if event.key == pygame.K_RIGHT:
         character.moving_right = True
     if event.key == pygame.K_LEFT:

@@ -4,6 +4,7 @@ from settings import Settings
 from pygame import Surface
 from character import Character
 
+
 class Bomb(Sprite):
     def __init__(self, game_settings: Settings, screen: Surface, character: Character):
         super(Bomb, self).__init__()
