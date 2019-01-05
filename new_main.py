@@ -39,8 +39,9 @@ def run_game():
         gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles, treasures, smile_of_fate)
         gf.kill_yout_heroes(explosions, character, character2)
         if len(obstacles.sprites()) < 5:
-            character.reset_character_position()
-            character2.reset_character_position()
+            treasures.empty()
+            character.reset_character_status()
+            character2.reset_character_status()
             obstacle_placer.create_obstacles(game_settings, screen, obstacles)
         smile_of_fate.player_collected_treasure(character, treasures)
         smile_of_fate.player_collected_treasure(character2, treasures)
