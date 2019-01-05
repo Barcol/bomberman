@@ -1,11 +1,9 @@
 import sys
-import random
 
 import pygame
 
 from bomb import Bomb
 from explosions import Explosion
-from obstacle import Obstacle
 
 
 def check_keydown_events(event, game_settings, screen, character, bombs):
@@ -104,32 +102,7 @@ def kill_yout_heroes(explosions, character, character2):
             character2.die()
 
 
-def place_a_treasure(drop_x, drop_y, game_settings, screen, treasures):
-    if random.randint(0, 10) < 5:
-        treasure = Obstacle(game_settings, screen, "treasure.bmp")
-        treasure.rect.x = drop_x
-        treasure.rect.y = drop_y
-        treasures.add(treasure)
-
-
-def player_collected_treasure(character, treasures):
-    for treasure in treasures:
-        if pygame.sprite.collide_rect(character, treasure):
-            treasures.remove(treasure)
-            type_of_upgrade(character)
-
-
-def type_of_upgrade(character):
-    guess = random.randint(0, 3)
-    if guess == 0:
-        character.character_speed += 0.4
-    if guess in (1, 2):
-        character.explosion_size += 25
-    if guess == 3:
-        character.bombs_allowed += 1
-
-
-def update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures):
+def update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures, smile_of_fate):
     bombs.update()
     drop = []
     for bomb in bombs.copy():
@@ -138,8 +111,9 @@ def update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures)
             explosions.add(Explosion(game_settings.explosion_width, bomb.character.explosion_size, screen, bomb))
             destroyed_obstacles = pygame.sprite.groupcollide(explosions, obstacles, False, True)
             for ashes in destroyed_obstacles:
-                drop.append(place_a_treasure(destroyed_obstacles[ashes][0].rect.x, destroyed_obstacles[ashes][0].rect.y,
-                                             game_settings, screen, treasures))
+                drop.append(smile_of_fate.place_a_treasure(destroyed_obstacles[ashes][0].rect.x,
+                                                           destroyed_obstacles[ashes][0].rect.y,
+                                                           game_settings, screen, treasures))
             bombs.remove(bomb)
     for explosion in explosions:
         explosion.update()

@@ -6,6 +6,7 @@ from character import Character
 from settings import Settings
 from joystick import Joystick
 from obstacle_placer import ObstaclePlacer
+from smile_of_fate import SmileOfFate
 
 
 def run_game():
@@ -25,6 +26,7 @@ def run_game():
     obstacle_placer.create_obstacles(game_settings, screen, obstacles)
     obstacle_placer.create_hard_obstacles(game_settings, screen, hard_obstacles)
     joystick = Joystick()
+    smile_of_fate = SmileOfFate(game_settings)
     latest_choices = (0, 0)
     while True:
         pygame.event.pump()
@@ -34,11 +36,11 @@ def run_game():
             latest_choices = gf.check_joystick_events(character2, joystick.is_joystick(), latest_choices[0],
                                                       latest_choices[1])
         character2.update(obstacles, hard_obstacles)
-        gf.update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures)
-        gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles, treasures)
+        gf.update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures, smile_of_fate)
+        gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles, treasures, smile_of_fate)
         gf.kill_yout_heroes(explosions, character, character2)
-        gf.player_collected_treasure(character, treasures)
-        gf.player_collected_treasure(character2, treasures)
+        smile_of_fate.player_collected_treasure(character, treasures)
+        smile_of_fate.player_collected_treasure(character2, treasures)
         gf.update_screen(game_settings, screen, character, obstacles, bombs, character2, bombs2, hard_obstacles,
                          explosions, treasures)
 
