@@ -47,47 +47,31 @@ def check_keyup_events(event: EventType, character: Character):
         character.moving_down = False
 
 
-def set_character_movement(character: Character, up: bool, right: bool, down: bool, left: bool):
-    character.moving_up = up
-    character.moving_right = right
-    character.moving_down = down
-    character.moving_left = left
+def set_character_movement(character: Character, positive: bool, negative: bool, direction: str):
+    if direction == "vertical":
+        character.moving_down = positive
+        character.moving_up = negative
+    if direction == "horizontal":
+        character.moving_right = positive
+        character.moving_left = negative
 
 
-def detect_last_choice(character: Character) -> Tuple:
-    if not (character.moving_left or character.moving_right):
+def check_joystick_axis(axis: float, character: Character, latest_choice: int, direction: str):
+    if (axis < 0.4) and (axis > -0.4) and (latest_choice != 0):
+        set_character_movement(character, False, False, direction)
         latest_choice = 0
-    elif character.moving_right:
+    if axis > 0.4 and (latest_choice != 1):
+        set_character_movement(character, True, False, direction)
         latest_choice = 1
-    else:
+    if axis < -0.4 and (latest_choice != 2):
+        set_character_movement(character, False, True, direction)
         latest_choice = 2
-    if not(character.moving_up or character.moving_down):
-        latest_choice_y = 3
-    elif character.moving_down:
-        latest_choice_y = 4
-    else:
-        latest_choice_y = 5
-    return latest_choice, latest_choice_y
-
-
-def check_joystick_axis_events(axis_x: float, axis_y: float, character: Character, latest_choices: Tuple) -> Tuple:
-    if (axis_x < 0.4) and (axis_x > -0.4) and (latest_choices[0] != 0):
-        set_character_movement(character, character.moving_up, False, character.moving_down, False)
-    if axis_x > 0.4 and (latest_choices[0] != 1):
-        set_character_movement(character, character.moving_up, True, character.moving_down, False)
-    if axis_x < -0.4 and (latest_choices[0] != 2):
-        set_character_movement(character, character.moving_up, False, character.moving_down, True)
-    if (axis_y < 0.4) and (axis_y > -0.4) and (latest_choices[1] != 3):
-        set_character_movement(character, False, character.moving_right, False, character.moving_left)
-    if axis_y > 0.4 and (latest_choices[1] != 4):
-        set_character_movement(character, False, character.moving_right, True, character.moving_left)
-    if axis_y < - 0.4 and (latest_choices[1] != 5):
-        set_character_movement(character, True, character.moving_right, False, character.moving_left)
-    return detect_last_choice(character)
+    return latest_choice
 
 
 def check_joystick_events(character: Character, joystick: Union[Joystick, bool], latest_choices: Tuple):
-    return check_joystick_axis_events(joystick.get_axis(0), joystick.get_axis(1), character, latest_choices)
+    return (check_joystick_axis(joystick.get_axis(0), character, latest_choices[0], "horizontal"),
+            check_joystick_axis(joystick.get_axis(1), character, latest_choices[1], "vertical"))
 
 
 def check_events(game_settings, screen, character, bombs, character2, bombs2):

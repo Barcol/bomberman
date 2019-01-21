@@ -12,8 +12,8 @@ class Settings():
         self.bomb_speed_factor = 1
         self.bombs_allowed = 3
 
-        self.explosion_size = 1500
-        self.explosion_width = 2000
+        self.explosion_size = 150
+        self.explosion_width = 20
 
         self.character_speed_boost = 0.4
         self.explosion_boost = 25
