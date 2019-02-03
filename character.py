@@ -41,7 +41,7 @@ class Character:
         self.image = pygame.image.load("dead_player.bmp")
         self.alive = False
 
-    def update(self, obstacles: Group, hard_obstacles: Group):
+    def step_horizontal(self, obstacles: Group, hard_obstacles: Group):
         if self.moving_right and (self.rect.right < self.screen_rect.right) and self.alive:
             if self.collision_check(obstacles, hard_obstacles):
                 self.center += self.character_speed
@@ -54,6 +54,8 @@ class Character:
             else:
                 self.center += 2 * self.character_speed
                 self.moving_left = False
+
+    def step_vertical(self, obstacles: Group, hard_obstacles: Group):
         if self.moving_up and (self.rect.top > self.screen_rect.top) and self.alive:
             if self.collision_check(obstacles, hard_obstacles):
                 self.center_height -= self.character_speed
@@ -67,6 +69,9 @@ class Character:
                 self.center_height -= 2 * self.character_speed
                 self.moving_down = False
 
+    def update(self, obstacles: Group, hard_obstacles: Group):
+        self.step_horizontal(obstacles, hard_obstacles)
+        self.step_vertical(obstacles, hard_obstacles)
         self.rect.centerx = self.center
         self.rect.centery = self.center_height
 
