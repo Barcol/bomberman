@@ -1,8 +1,10 @@
-import pygame
 from typing import Tuple
-from settings import Settings
+
+import pygame
 from pygame import Surface
 from pygame.sprite import Group
+
+from settings import Settings
 
 
 class Character:
@@ -26,6 +28,8 @@ class Character:
         self.center_copy = self.center
         self.center_height_copy = self.center_height
         self.alive = True
+        self.safe_spot = ()
+        self.undertextured_counter = 0
         self.moving_right, self.moving_left, self.moving_up, self.moving_down = (False, False, False, False)
 
     def reset_character_status(self):
@@ -41,37 +45,36 @@ class Character:
         self.image = pygame.image.load("dead_player.bmp")
         self.alive = False
 
-    def step_horizontal(self, obstacles: Group, hard_obstacles: Group):
-        if self.moving_right and (self.rect.right < self.screen_rect.right) and self.alive:
-            if self.collision_check(obstacles, hard_obstacles):
-                self.center += self.character_speed
-            else:
-                self.center -= 2 * self.character_speed
-                self.moving_right = False
-        if self.moving_left and (self.rect.left > self.screen_rect.left) and self.alive:
-            if self.collision_check(obstacles, hard_obstacles):
-                self.center -= self.character_speed
-            else:
-                self.center += 2 * self.character_speed
-                self.moving_left = False
+    def step_horizontal_alternative(self, obstacles, hard_obstacles, positive_vector):
+        self.center += self.character_speed * positive_vector
+        if self.alive and self.collision_check(obstacles, hard_obstacles):
+            self.rect.centerx = self.center
 
-    def step_vertical(self, obstacles: Group, hard_obstacles: Group):
-        if self.moving_up and (self.rect.top > self.screen_rect.top) and self.alive:
-            if self.collision_check(obstacles, hard_obstacles):
-                self.center_height -= self.character_speed
-            else:
-                self.center_height += 2 * self.character_speed
-                self.moving_up = False
-        if self.moving_down and (self.rect.bottom < self.screen_rect.bottom) and self.alive:
-            if self.collision_check(obstacles, hard_obstacles):
-                self.center_height += self.character_speed
-            else:
-                self.center_height -= 2 * self.character_speed
-                self.moving_down = False
+    def step_vertical_alternative(self, obstacles, hard_obstacles, positive_vector):
+        self.center_height += self.character_speed * positive_vector
+        if self.alive and self.collision_check(obstacles, hard_obstacles):
+            self.rect.centery = self.center
+
+    def step(self, obstacles, hard_obstacles):
+        if self.moving_left and (self.rect.left > self.screen_rect.left):
+            self.step_horizontal_alternative(obstacles, hard_obstacles, -1)
+        if self.moving_right and (self.rect.right < self.screen_rect.right):
+            self.step_horizontal_alternative(obstacles, hard_obstacles, 1)
+        if self.moving_up and (self.rect.top > self.screen_rect.top):
+            self.step_vertical_alternative(obstacles, hard_obstacles, -1)
+        if self.moving_down and (self.rect.bottom < self.screen_rect.bottom):
+            self.step_vertical_alternative(obstacles, hard_obstacles, 1)
 
     def update(self, obstacles: Group, hard_obstacles: Group):
-        self.step_horizontal(obstacles, hard_obstacles)
-        self.step_vertical(obstacles, hard_obstacles)
+        if self.collision_check(obstacles, hard_obstacles):
+            self.safe_spot = self.center, self.center_height
+        else:
+            self.undertextured_counter += 1
+        if self.undertextured_counter < 1:
+            self.step(obstacles, hard_obstacles)
+        else:
+            self.center, self.center_height = self.safe_spot
+            self.undertextured_counter = 0
         self.rect.centerx = self.center
         self.rect.centery = self.center_height
 
