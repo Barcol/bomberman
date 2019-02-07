@@ -7,6 +7,7 @@ from settings import Settings
 from joystick import Joystick
 from obstacle_placer import ObstaclePlacer
 from smile_of_fate import SmileOfFate
+from controller import Controller
 
 
 def run_game():
@@ -28,16 +29,17 @@ def run_game():
     joystick = Joystick()
     smile_of_fate = SmileOfFate(game_settings)
     latest_choices = (0, 0)
+    controller = Controller()
     while True:
         pygame.event.pump()
-        gf.check_events(game_settings, screen, character, bombs, character2, bombs2)
+        controller.check_events(game_settings, screen, character, bombs, character2, bombs2)
         character.update(obstacles, hard_obstacles)
         if joystick.is_joystick():
-            latest_choices = gf.check_joystick_events(character2, joystick.is_joystick(), latest_choices)
+            latest_choices = controller.check_joystick_events(character2, joystick.is_joystick(), latest_choices)
         character2.update(obstacles, hard_obstacles)
         gf.update_bombs(bombs, game_settings, screen, explosions, obstacles, treasures, smile_of_fate)
         gf.update_bombs(bombs2, game_settings, screen, explosions, obstacles, treasures, smile_of_fate)
-        gf.kill_yout_heroes(explosions, character, character2)
+        gf.kill_your_heroes(explosions, character, character2)
         if len(obstacles.sprites()) < 5:
             treasures.empty()
             character.reset_character_status()

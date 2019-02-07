@@ -47,26 +47,26 @@ class Character:
 
     def step_horizontal_alternative(self, obstacles, hard_obstacles, positive_vector):
         self.center += self.character_speed * positive_vector
-        if self.alive and self.collision_check(obstacles, hard_obstacles):
+        if not self.collision_check(obstacles, hard_obstacles):
             self.rect.centerx = self.center
 
     def step_vertical_alternative(self, obstacles, hard_obstacles, positive_vector):
         self.center_height += self.character_speed * positive_vector
-        if self.alive and self.collision_check(obstacles, hard_obstacles):
+        if not self.collision_check(obstacles, hard_obstacles):
             self.rect.centery = self.center
 
     def step(self, obstacles, hard_obstacles):
-        if self.moving_left and (self.rect.left > self.screen_rect.left):
+        if self.moving_left and self.alive and (self.rect.left > self.screen_rect.left):
             self.step_horizontal_alternative(obstacles, hard_obstacles, -1)
-        if self.moving_right and (self.rect.right < self.screen_rect.right):
+        if self.moving_right and self.alive and (self.rect.right < self.screen_rect.right):
             self.step_horizontal_alternative(obstacles, hard_obstacles, 1)
-        if self.moving_up and (self.rect.top > self.screen_rect.top):
+        if self.moving_up and self.alive and (self.rect.top > self.screen_rect.top):
             self.step_vertical_alternative(obstacles, hard_obstacles, -1)
-        if self.moving_down and (self.rect.bottom < self.screen_rect.bottom):
+        if self.moving_down and self.alive and (self.rect.bottom < self.screen_rect.bottom):
             self.step_vertical_alternative(obstacles, hard_obstacles, 1)
 
     def update(self, obstacles: Group, hard_obstacles: Group):
-        if self.collision_check(obstacles, hard_obstacles):
+        if not self.collision_check(obstacles, hard_obstacles):
             self.safe_spot = self.center, self.center_height
         else:
             self.undertextured_counter += 1
@@ -81,11 +81,11 @@ class Character:
     def collision_check(self, obstacles: Group, hard_obstacles: Group) -> bool:
         for obstacle in obstacles:
             if pygame.sprite.collide_rect(obstacle, self):
-                return False
+                return True
         for obstacle in hard_obstacles:
             if pygame.sprite.collide_rect(obstacle, self):
-                return False
-        return True
+                return True
+        return False
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
