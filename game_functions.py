@@ -43,19 +43,3 @@ def bomb_blow(bombs: Group, game_settings: Settings, screen: Surface, explosions
                                                    game_settings, screen, treasures))
     bombs.remove(bomb)
 
-
-def update_screen(game_settings: Settings, screen: Surface, character: Character, obstacles: Group, bombs: Group,
-                  character2: Character, bombs2: Group, hard_obstacles: Group, explosions: Group, treasures: Group):
-    screen.fill(game_settings.bg_color)
-    for bomb in bombs.sprites():
-        bomb.draw_bomb()
-    for bomb in bombs2.sprites():
-        bomb.draw_bomb()
-    character.blitme()
-    character2.blitme()
-    obstacles.draw(screen)
-    for explosion in explosions.sprites():
-        explosion.drawme()
-    hard_obstacles.draw(screen)
-    treasures.draw(screen)
-    pygame.display.flip()
