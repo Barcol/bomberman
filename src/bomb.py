@@ -1,8 +1,9 @@
 import pygame
-from pygame.sprite import Sprite
-from settings import Settings
 from pygame import Surface
-from character import Character
+from pygame.sprite import Sprite
+
+from src.character import Character
+from src.settings import Settings
 
 
 class Bomb(Sprite):

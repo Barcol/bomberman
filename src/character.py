@@ -4,7 +4,7 @@ import pygame
 from pygame import Surface
 from pygame.sprite import Group
 
-from settings import Settings
+from src.settings import Settings
 
 
 class Character:

@@ -1,7 +1,8 @@
 import pygame
-from pygame.sprite import Sprite
 from pygame import Surface
-from bomb import Bomb
+from pygame.sprite import Sprite
+
+from src.bomb import Bomb
 
 
 class Explosion(Sprite):

@@ -1,7 +1,8 @@
 import pygame
-from settings import Settings
-from character import Character
 from pygame.sprite import Group
+
+from src.character import Character
+from src.settings import Settings
 
 
 class Screen:

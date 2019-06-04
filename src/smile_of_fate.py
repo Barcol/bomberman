@@ -1,10 +1,11 @@
 import random
-from obstacle import Obstacle
+
 import pygame
-from character import Character
-from pygame.sprite import Group
+from src.character import Character
+from src.obstacle import Obstacle
 from pygame import Surface
-from settings import Settings
+from pygame.sprite import Group
+from src.settings import Settings
 
 
 class SmileOfFate:

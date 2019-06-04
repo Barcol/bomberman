@@ -1,5 +1,5 @@
-from obstacle import Obstacle
-from settings import Settings
+from src.obstacle import Obstacle
+from src.settings import Settings
 from pygame.sprite import Group
 from pygame import Surface
 import math

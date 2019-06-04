@@ -1,14 +1,14 @@
 import pygame
 from pygame.sprite import Group
 
-from bombs_handler import BombsHandler
-from character import Character
-from controller import Controller
-from joystick import Joystick
-from obstacle_placer import ObstaclePlacer
-from screen import Screen
-from settings import Settings
-from smile_of_fate import SmileOfFate
+from src.bombs_handler import BombsHandler
+from src.character import Character
+from src.controller import Controller
+from src.joystick import Joystick
+from src.obstacle_placer import ObstaclePlacer
+from src.screen import Screen
+from src.settings import Settings
+from src.smile_of_fate import SmileOfFate
 
 
 def run_game():

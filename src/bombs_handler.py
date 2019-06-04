@@ -4,11 +4,11 @@ import pygame
 from pygame import Surface
 from pygame.sprite import Group
 
-from bomb import Bomb
-from character import Character
-from explosions import Explosion
-from settings import Settings
-from smile_of_fate import SmileOfFate
+from src.bomb import Bomb
+from src.character import Character
+from src.explosions import Explosion
+from src.settings import Settings
+from src.smile_of_fate import SmileOfFate
 
 
 class BombsHandler:

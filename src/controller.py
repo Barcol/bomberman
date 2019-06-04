@@ -7,9 +7,9 @@ from pygame.event import EventType
 from pygame.joystick import Joystick
 from pygame.sprite import Group
 
-from bomb import Bomb
-from character import Character
-from settings import Settings
+from src.bomb import Bomb
+from src.character import Character
+from src.settings import Settings
 
 
 class Controller:
