@@ -34,16 +34,16 @@ class ObstaclePlacer:
         obstacles.add(obstacle)
 
     def create_hard_obstacles(self, game_settings: Settings, screen: Surface, obstacles: Group):
-        obstacle = Obstacle(game_settings, screen, "hard_obstacle.bmp")
+        obstacle = Obstacle(game_settings, screen, "../graphic/hard_obstacle.bmp")
         obstacle_width = obstacle.rect.width
         number_rows = self.get_number_rows(game_settings, obstacle.rect.height)
         for row_number in range(math.floor(number_rows / 2)):
             for obstacle_number in range(self.get_number_obstacles_x(game_settings, obstacle_width, 0) - 1):
                 self.create_obstacle(game_settings, screen, obstacles, obstacle_number, 1 + (2 * row_number),
-                                     obstacle_width, "hard_obstacle.bmp")
+                                     obstacle_width, "../graphic/hard_obstacle.bmp")
 
     def create_obstacles(self, game_settings: Settings, screen: Surface, obstacles: Group):
-        obstacle = Obstacle(game_settings, screen, "obstacle.bmp")
+        obstacle = Obstacle(game_settings, screen, "../graphic/obstacle.bmp")
         obstacle_width = obstacle.rect.width
         number_rows = self.get_number_rows(game_settings, obstacle.rect.height)
         for row_number in range(number_rows):
@@ -57,4 +57,4 @@ class ObstaclePlacer:
                 if (row_number == number_rows - 1) or (row_number == (number_rows - 2)):
                     obstacle_number -= 1
                 self.create_obstacle(game_settings, screen, obstacles, obstacle_number, row_number, tabulator,
-                                     "obstacle.bmp")
+                                     "../graphic/obstacle.bmp")

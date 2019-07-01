@@ -10,7 +10,7 @@ from src.settings import Settings
 class Character:
     def __init__(self, game_settings: Settings, screen: Surface, coord: Tuple):
         self.screen = screen
-        self.image = pygame.image.load("player.bmp")
+        self.image = pygame.image.load("../graphic/player.bmp")
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.bombs_allowed = game_settings.bombs_allowed
@@ -33,7 +33,7 @@ class Character:
         self.moving_right, self.moving_left, self.moving_up, self.moving_down = (False, False, False, False)
 
     def reset_character_status(self):
-        self.image = pygame.image.load("player.bmp")
+        self.image = pygame.image.load("../graphic/player.bmp")
         if self.coord == (0, 0):
             self.center = self.screen_rect.left + int(self.rect.width / 2)
             self.center_height = self.screen_rect.top + int(self.rect.height/2)
@@ -42,7 +42,7 @@ class Character:
             self.center_height = self.screen_rect.bottom - int(self.rect.height / 2)
 
     def die(self):
-        self.image = pygame.image.load("dead_player.bmp")
+        self.image = pygame.image.load("../graphic/dead_player.bmp")
         self.alive = False
 
     def step_horizontal_alternative(self, obstacles, hard_obstacles, positive_vector):
